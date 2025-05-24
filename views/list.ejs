@@ -3,21 +3,43 @@
 <head>
     <title>Todo List</title>
     <link rel="stylesheet" href="css/styles.css">
+    <script>
+        function toggleEdit(index) {
+            const displayP = document.getElementById("task-text-" + index);
+            const editForm = document.getElementById("edit-form-" + index);
+            if (displayP.style.display === "none") {
+                displayP.style.display = "block";
+                editForm.style.display = "none";
+            } else {
+                displayP.style.display = "none";
+                editForm.style.display = "block";
+            }
+        }
+    </script>
 </head>
 <body>
-    <!-- Header Section -->
     <header class="header">
         <div class="container">
             <h1>My Todo List</h1>
         </div>
     </header>
-
-    <!-- Main Content -->
     <main class="box">
         <% for (let i = 0; i < ejes.length; i++) { %>
             <div class="item">
                 <input type="checkbox" id="task-<%= i %>">
-                <p><%= ejes[i] %></p>
+                
+                <p id="task-text-<%= i %>"><%= ejes[i] %></p>
+
+                <form id="edit-form-<%= i %>" action="/edit" method="POST" style="display:none;" class="edit-form">
+                    <input type="hidden" name="index" value="<%= i %>">
+                    <input type="text" name="newText" value="<%= ejes[i] %>" required>
+                    <button type="submit" class="save-btn">💾</button>
+                    <button type="button" onclick="toggleEdit(<%= i %>)" class="cancel-btn">✖️</button>
+                </form>
+
+
+                <button onclick="toggleEdit(<%= i %>)" class="edit-btn">✏️</button>
+
                 <form action="/delete" method="POST" class="delete-form">
                     <input type="hidden" name="index" value="<%= i %>">
                     <button type="submit" class="delete-btn">🗑️</button>
@@ -31,7 +53,6 @@
         </form>
     </main>
 
-    <!-- Footer Section -->
     <footer class="footer">
         <div class="container">
             <p>&copy; <%= new Date().getFullYear() %> Todo List App. All rights reserved.</p>

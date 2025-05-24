@@ -1,28 +1,31 @@
-/* General Styles */
+
 body {
     font-family: 'Segoe UI', sans-serif;
-    background-color: #f2f2f2;
     margin: 0;
     padding: 0;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    background-color: #667eea;
+    color: white; 
 }
 
+
 .box {
-    background-color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.9);
     max-width: 600px;
     margin: 40px auto;
     padding: 20px;
     border-radius: 12px;
     box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    color: #333; 
 }
 
-/* Header */
+
 .box h1 {
     text-align: center;
     color: #333;
     margin-bottom: 30px;
 }
 
-/* Task Items */
 .item {
     display: flex;
     align-items: center;
@@ -36,7 +39,6 @@ body {
     cursor: pointer;
 }
 
-/* Strike through when checked */
 .item input[type="checkbox"]:checked + p {
     text-decoration: line-through;
     color: #aaa;
@@ -49,7 +51,6 @@ body {
     flex: 1;
 }
 
-/* Form */
 form {
     display: flex;
     gap: 10px;
@@ -78,7 +79,7 @@ form button:hover {
     background-color: darkslateblue;
 }
 
-/* Delete Button */
+
 .delete-form {
     margin: 0;
 }
@@ -95,7 +96,44 @@ form button:hover {
     color: darkred;
 }
 
-/* Responsive Design */
+.edit-btn, .delete-btn, .save-btn, .cancel-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    margin-left: 5px;
+}
+
+.edit-btn:hover {
+    color: darkorange;
+}
+
+.delete-btn:hover {
+    color: crimson;
+}
+
+.save-btn:hover {
+    color: green;
+}
+
+.cancel-btn:hover {
+    color: darkred;
+}
+
+.edit-form {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+
+.edit-form input[type="text"] {
+    padding: 5px 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    flex: 1;
+}
+
 @media screen and (max-width: 600px) {
     .box {
         margin: 20px;
@@ -110,7 +148,7 @@ form button:hover {
         font-size: 16px;
     }
 }
-/* Header */
+
 .header {
     background-color: darkblue;
     padding: 20px 0;
@@ -124,19 +162,12 @@ form button:hover {
     font-size: 32px;
 }
 
-/* Footer */
-.footer {
+
+footer.footer {
+    flex-shrink: 0; /* don’t shrink */
     background-color: #333;
     color: white;
     text-align: center;
     padding: 15px 0;
-    position: relative;
-    bottom: 0;
     width: 100%;
-    margin-top: 40px;
-}
-
-.footer p {
-    margin: 0;
-    font-size: 14px;
 }
