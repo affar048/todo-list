@@ -1,0 +1,95 @@
+/* General Styles */
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f2f2f2;
+    margin: 0;
+    padding: 0;
+}
+
+.box {
+    background-color: #ffffff;
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+}
+
+/* Header */
+.box h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 30px;
+}
+
+/* Task Items */
+.item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.item input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+/* When checkbox is checked, strike through the task */
+.item input[type="checkbox"]:checked + p {
+    text-decoration: line-through;
+    color: #aaa;
+    opacity: 0.6;
+}
+
+.item p {
+    margin: 0;
+    font-size: 18px;
+    flex: 1;
+}
+
+/* Form */
+form {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+form input[type="text"] {
+    flex: 1;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+
+form button {
+    background-color: darkblue;
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    font-size: 18px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+form button:hover {
+    background-color: darkslateblue;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 600px) {
+    .box {
+        margin: 20px;
+        padding: 15px;
+    }
+
+    .item p {
+        font-size: 16px;
+    }
+
+    form button {
+        font-size: 16px;
+    }
+}
