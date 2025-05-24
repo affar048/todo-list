@@ -1,23 +1,41 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Todo list</title>
+    <title>Todo List</title>
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-    <div class="box">
-        <h1>Todo list</h1>
-    </div>
-    <div class="box">
-       <% for(var i=0;i< ejes.length;i++){%>
-        <div class="item"><input type="checkbox">
-            <p><%= ejes[i] %></p>
-        </div>      
-       <% }%>
-        <form action="/" method="post">
-            <input type="text" name="ele1" placeholder="Enter the task">
+    <!-- Header Section -->
+    <header class="header">
+        <div class="container">
+            <h1>My Todo List</h1>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="box">
+        <% for (let i = 0; i < ejes.length; i++) { %>
+            <div class="item">
+                <input type="checkbox" id="task-<%= i %>">
+                <p><%= ejes[i] %></p>
+                <form action="/delete" method="POST" class="delete-form">
+                    <input type="hidden" name="index" value="<%= i %>">
+                    <button type="submit" class="delete-btn">🗑️</button>
+                </form>
+            </div>
+        <% } %>
+
+        <form action="/" method="POST">
+            <input type="text" name="ele1" placeholder="Enter the task" required>
             <button type="submit">+</button>
         </form>
-    </div>
+    </main>
+
+    <!-- Footer Section -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; <%= new Date().getFullYear() %> Todo List App. All rights reserved.</p>
+        </div>
+    </footer>
 </body>
 </html>

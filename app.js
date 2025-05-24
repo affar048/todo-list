@@ -1,24 +1,42 @@
 const express = require("express");
-const bodyparser = require("body-parser");
+const bodyParser = require("body-parser");
 
-var app = express();
-app.set("view engine","ejs");
-app.use(express.static('public'));
-app.use(express.urlencoded({extended:true}));
-var items = [];
-var example="Working";
-app.get("/",function(req,res){
-    res.render("list",{ejes : items});
+const app = express();
+
+// Set up EJS as the view engine
+app.set("view engine", "ejs");
+
+// Middleware
+app.use(express.static("public"));
+app.use(express.urlencoded({ extended: true }));
+
+// In-memory list to store todo items
+let items = [];
+
+// GET: Home page - show todo list
+app.get("/", (req, res) => {
+    res.render("list", { ejes: items });
 });
 
-app.post("/",function(req,res){
-    var item = req.body.ele1;
-    items.push(item);
+// POST: Add a new item
+app.post("/", (req, res) => {
+    const item = req.body.ele1;
+    if (item.trim() !== "") {
+        items.push(item);
+    }
     res.redirect("/");
 });
 
+// POST: Delete an item by index
+app.post("/delete", (req, res) => {
+    const index = req.body.index;
+    if (index !== undefined && index >= 0 && index < items.length) {
+        items.splice(index, 1);
+    }
+    res.redirect("/");
+});
 
-
-app.listen(4000,function(){
-    console.log("server started");
+// Start the server
+app.listen(4000, () => {
+    console.log("Server started on port 4000");
 });
