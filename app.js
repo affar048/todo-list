@@ -8,10 +8,15 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
 // MongoDB connection
-mongoose.connect("mongodb+srv://affaraffu:LkkSO09DVxd6XFeH@todotest.0kbztty.mongodb.net/?retryWrites=true&w=majority&appName=todotest", {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-});
+
+mongoose.connect("mongodb+srv://affaraffu:LkkSO09DVxd6XFeH@todotest.0kbztty.mongodb.net/todotest?retryWrites=true&w=majority&appName=todotest")
+    .then(() => {
+        console.log("✅ Connected to MongoDB Atlas");
+    })
+    .catch((err) => {
+        console.error("❌ MongoDB connection error:", err);
+    });
+
 
 // Schema and model
 const itemSchema = new mongoose.Schema({
