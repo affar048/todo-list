@@ -1,52 +1,71 @@
 const express = require("express");
-const bodyParser = require("body-parser");
-
+const mongoose = require("mongoose");
 const app = express();
 
+// Middleware
 app.set("view engine", "ejs");
-
-app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
+app.use(express.static("public"));
 
-let items = [];
-
-app.get("/", (req, res) => {
-    res.render("list", { ejes: items });
+// MongoDB connection
+mongoose.connect("mongodb+srv://affaraffu:LkkSO09DVxd6XFeH@todotest.0kbztty.mongodb.net/?retryWrites=true&w=majority&appName=todotest", {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
 });
 
-app.post("/", (req, res) => {
-    const item = req.body.ele1;
-    if (item.trim() !== "") {
-        items.push(item);
+// Schema and model
+const itemSchema = new mongoose.Schema({
+    name: String
+});
+const Item = mongoose.model("Item", itemSchema);
+
+// GET: Render todo list
+app.get("/", async (req, res) => {
+    try {
+        const items = await Item.find({});
+        res.render("list", { ejes: items });
+    } catch (err) {
+        console.error("Error fetching items:", err);
+        res.status(500).send("Internal Server Error");
+    }
+});
+
+// POST: Add new item
+app.post("/", async (req, res) => {
+    const itemName = req.body.ele1;
+    if (itemName.trim() !== "") {
+        const newItem = new Item({ name: itemName });
+        await newItem.save();
     }
     res.redirect("/");
 });
 
-app.post("/delete", (req, res) => {
-    const index = req.body.index;
-    if (index !== undefined && index >= 0 && index < items.length) {
-        items.splice(index, 1);
+// POST: Delete item
+app.post("/delete", async (req, res) => {
+    const itemId = req.body.index;
+    try {
+        await Item.findByIdAndDelete(itemId);
+        res.redirect("/");
+    } catch (err) {
+        console.error("Error deleting item:", err);
+        res.status(500).send("Error deleting item");
     }
-    res.redirect("/");
 });
 
-
-app.post("/edit", (req, res) => {
-    const index = req.body.index;
-    const newText = req.body.newText;
-
-    if (
-        index !== undefined &&
-        index >= 0 &&
-        index < items.length &&
-        newText.trim() !== ""
-    ) {
-        items[index] = newText.trim();
+// POST: Edit item
+app.post("/edit", async (req, res) => {
+    const itemId = req.body.index;
+    const updatedText = req.body.newText;
+    try {
+        await Item.findByIdAndUpdate(itemId, { name: updatedText });
+        res.redirect("/");
+    } catch (err) {
+        console.error("Error updating item:", err);
+        res.status(500).send("Error updating item");
     }
-    res.redirect("/");
 });
 
-
-app.listen(4000, () => {
-    console.log("Server started on port 4000");
+// Start server
+app.listen(8000, () => {
+    console.log("Server is running on http://localhost:8000");
 });

@@ -7,10 +7,21 @@
   },
   "author": "\"affar\"",
   "license": "ISC",
-  "description": "",
   "dependencies": {
     "body-parser": "^2.2.0",
     "ejs": "^3.1.10",
-    "express": "^5.1.0"
-  }
+    "express": "^5.1.0",
+    "mongodb": "^6.16.0",
+    "mongoose": "^8.15.0"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/affar048/Express-App-project.git"
+  },
+  "bugs": {
+    "url": "https://github.com/affar048/Express-App-project/issues"
+  },
+  "homepage": "https://github.com/affar048/Express-App-project#readme",
+  "description": ""
 }
