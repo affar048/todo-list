@@ -1,15 +1,14 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const methodOverride = require("method-override");
 const app = express();
 
-// Middleware
 app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
+app.use(methodOverride("_method")); 
 
-// MongoDB connection
-
-mongoose.connect("mongodb+srv://affaraffu:LkkSO09DVxd6XFeH@todotest.0kbztty.mongodb.net/todotest?retryWrites=true&w=majority&appName=todotest")
+mongoose.connect("mongodb+srv://affaraffu:LkkSO09DVxd6XFeH@todotest.0kbztty.mongodb.net/?retryWrites=true&w=majority&appName=todotest")
     .then(() => {
         console.log("✅ Connected to MongoDB Atlas");
     })
@@ -17,14 +16,10 @@ mongoose.connect("mongodb+srv://affaraffu:LkkSO09DVxd6XFeH@todotest.0kbztty.mong
         console.error("❌ MongoDB connection error:", err);
     });
 
-
-// Schema and model
 const itemSchema = new mongoose.Schema({
     name: String
 });
 const Item = mongoose.model("Item", itemSchema);
-
-// GET: Render todo list
 app.get("/", async (req, res) => {
     try {
         const items = await Item.find({});
@@ -35,7 +30,6 @@ app.get("/", async (req, res) => {
     }
 });
 
-// POST: Add new item
 app.post("/", async (req, res) => {
     const itemName = req.body.ele1;
     if (itemName.trim() !== "") {
@@ -45,21 +39,8 @@ app.post("/", async (req, res) => {
     res.redirect("/");
 });
 
-// POST: Delete item
-app.post("/delete", async (req, res) => {
-    const itemId = req.body.index;
-    try {
-        await Item.findByIdAndDelete(itemId);
-        res.redirect("/");
-    } catch (err) {
-        console.error("Error deleting item:", err);
-        res.status(500).send("Error deleting item");
-    }
-});
-
-// POST: Edit item
-app.post("/edit", async (req, res) => {
-    const itemId = req.body.index;
+app.put("/edit/:id", async (req, res) => {
+    const itemId = req.params.id;
     const updatedText = req.body.newText;
     try {
         await Item.findByIdAndUpdate(itemId, { name: updatedText });
@@ -70,7 +51,16 @@ app.post("/edit", async (req, res) => {
     }
 });
 
-// Start server
+app.delete("/delete/:id", async (req, res) => {
+    const itemId = req.params.id;
+    try {
+        await Item.findByIdAndDelete(itemId);
+        res.redirect("/");
+    } catch (err) {
+        console.error("Error deleting item:", err);
+        res.status(500).send("Error deleting item");
+    }
+});
 app.listen(8000, () => {
-    console.log("Server is running on http://localhost:8000");
+    console.log("Server is running");
 });

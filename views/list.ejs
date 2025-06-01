@@ -27,31 +27,18 @@
     <main class="box">
         <% for (let i = 0; i < ejes.length; i++) { %>
             <div class="item">
-               
-                
-                <!-- Task Display -->
                 <p id="task-text-<%= i %>"><%= ejes[i].name %></p>
-
-                <!-- Edit Form -->
-                <form id="edit-form-<%= i %>" action="/edit" method="POST" style="display:none;" class="edit-form">
-                    <input type="hidden" name="index" value="<%= ejes[i]._id %>">
+                <form id="edit-form-<%= i %>" action="/edit/<%= ejes[i]._id %>?_method=PUT" method="POST" style="display:none;" class="edit-form">
                     <input type="text" name="newText" value="<%= ejes[i].name %>" required>
                     <button type="submit" class="save-btn">💾</button>
                     <button type="button" onclick="toggleEdit(<%= i %>)" class="cancel-btn">✖️</button>
                 </form>
-
-                <!-- Edit Button -->
                 <button onclick="toggleEdit(<%= i %>)" class="edit-btn">✏️</button>
-
-                <!-- Delete Form -->
-                <form action="/delete" method="POST" class="delete-form">
-                    <input type="hidden" name="index" value="<%= ejes[i]._id %>">
+                <form action="/delete/<%= ejes[i]._id %>?_method=DELETE" method="POST" class="delete-form">
                     <button type="submit" class="delete-btn">🗑️</button>
                 </form>
             </div>
         <% } %>
-
-        <!-- Add New Task -->
         <form action="/" method="POST">
             <input type="text" name="ele1" placeholder="Enter the task" required>
             <button type="submit">+</button>
