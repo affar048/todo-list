@@ -11,7 +11,7 @@
     <% ejes.forEach(function(task) { %>
       <li>
         <%= task.name %>
-      <form action="/edit/<%= task._id %>?_method=PUT" method="POST" onsubmit="return validateEdit()" style="display:inline;">
+      <form action="/edit/<%= task._id %>?_method=PUT" method="POST" style="display:inline;">
         <input type="text" id="editInput-<%= task._id %>" name="newText" placeholder="New task text">
         <button type="submit">Edit</button>
       </form>
@@ -29,14 +29,6 @@
 </form>
 
 <script>
-function validateEdit() {
-    var inputField = document.getElementById("editInput-<%= task._id %>").value;
-    if (inputField.trim() === "") {
-        alert("Task text cannot be empty!");
-        return false;
-    }
-}
-
 function validform() {
     var taskinput = document.getElementById("taskinput").value;
     if (taskinput.trim() === "") {
