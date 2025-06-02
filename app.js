@@ -8,7 +8,10 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 app.use(methodOverride("_method"));
 
-mongoose.connect("mongodb+srv://affaraffu:LkkSO09DVxd6XFeH@todotest.0kbztty.mongodb.net/todotest");
+mongoose.connect("mongodb+srv://affaraffu:LkkSO09DVxd6XFeH@todotest.0kbztty.mongodb.net/todotest",{
+    useNewUrlParser: true, 
+    useUnifiedTopology: true 
+);
 
 const Task = mongoose.model("Task", { 
     name: String, 
