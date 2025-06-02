@@ -10,8 +10,7 @@
 
     <ul>
         <% tasks.forEach(task => { 
-            let color = task.priority === 'urgent' ? 'red' : 
-                        task.priority === 'high' ? 'orange' : 'green'; 
+            
         %>
         <li>
             <strong><%= task.name %></strong> - 
