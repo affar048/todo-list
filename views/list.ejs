@@ -1,54 +1,30 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Todo List</title>
-    <link rel="stylesheet" href="/css/styles.css">
-    <script>
-        function toggleEdit(index) {
-            const displayP = document.getElementById("task-text-" + index);
-            const editForm = document.getElementById("edit-form-" + index);
-            if (displayP.style.display === "none") {
-                displayP.style.display = "block";
-                editForm.style.display = "none";
-            } else {
-                displayP.style.display = "none";
-                editForm.style.display = "block";
-            }
-        }
-    </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Todo List</title>
+  <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
-    <header class="header">
-        <div class="container">
-            <h1>My Todo List</h1>
-        </div>
-    </header>
-
-    <main class="box">
-        <% for (let i = 0; i < ejes.length; i++) { %>
-            <div class="item">
-                <p id="task-text-<%= i %>"><%= ejes[i].name %></p>
-                <form id="edit-form-<%= i %>" action="/edit/<%= ejes[i]._id %>?_method=PUT" method="POST" style="display:none;" class="edit-form">
-                    <input type="text" name="newText" value="<%= ejes[i].name %>" required>
-                    <button type="submit" class="save-btn">💾</button>
-                    <button type="button" onclick="toggleEdit(<%= i %>)" class="cancel-btn">✖️</button>
-                </form>
-                <button onclick="toggleEdit(<%= i %>)" class="edit-btn">✏️</button>
-                <form action="/delete/<%= ejes[i]._id %>?_method=DELETE" method="POST" class="delete-form">
-                    <button type="submit" class="delete-btn">🗑️</button>
-                </form>
-            </div>
-        <% } %>
-        <form action="/" method="POST">
-            <input type="text" name="ele1" placeholder="Enter the task" required>
-            <button type="submit">+</button>
+  <h1>My Todo List</h1>
+  <ul>
+    <% ejes.forEach(function(task) { %>
+      <li>
+        <%= task.name %>
+        <form action="/edit/<%= task._id %>?_method=PUT" method="POST" style="display:inline;">
+          <input type="text" name="newText" placeholder="New task text" required>
+          <button type="submit">Edit</button>
         </form>
-    </main>
+        <form action="/delete/<%= task._id %>?_method=DELETE" method="POST" style="display:inline;">
+          <button type="submit">Delete</button>
+        </form>
+      </li>
+    <% }); %>
+  </ul>
 
-    <footer class="footer">
-        <div class="container">
-            <p>&copy; <%= new Date().getFullYear() %> Todo List App. All rights reserved.</p>
-        </div>
-    </footer>
+  <form action="/" method="POST">
+    <input type="text" name="ele1" placeholder="Enter a new task" required>
+    <button type="submit">Add Task</button>
+  </form>
 </body>
 </html>
