@@ -1,48 +1,55 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Todo List</title>
-  <link rel="stylesheet" href="/css/styles.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Todo List</title>
+    <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
-  <h1>My Todo List</h1>
-  <ul>
-    <% ejes.forEach(function(task) { %>
-      <li>
-       <strong><%= task.name %></strong> - <span style="color: <%= task.priority === 'urgent' ? 'red' : task.priority === 'high' ? 'orange' : 'green' %>;">
-        <%= task.priority.toUpperCase() %></span>
+    <h1>My Todo List</h1>
+    <ul>
+        <% tasks.forEach(task => { %>
+        <li>
+            <strong><%= task.name %></strong> - <span style="color: <%= getColor(task.priority) %>;">
+            <%= task.priority %></span>
+            
+            <form action="/edit/<%= task._id %>?_method=PUT" method="POST" style="display:inline;">
+                <input type="text" name="newText" placeholder="Edit task">
+                <button type="submit">Edit</button>
+            </form>
+            
+            <form action="/delete/<%= task._id %>?_method=DELETE" method="POST" style="display:inline;">
+                <button type="submit">Delete</button>
+            </form>
+        </li>
+        <% }); %>
+    </ul>
 
-      <form action="/edit/<%= task._id %>?_method=PUT" method="POST" style="display:inline;">
-        <input type="text" id="editInput-<%= task._id %>" name="newText" placeholder="New task text">
-        <button type="submit">Edit</button>
-      </form>
-
-        <form action="/delete/<%= task._id %>?_method=DELETE" method="POST" style="display:inline;">
-          <button type="submit">Delete</button>
-        </form>
-      </li>
-    <% }); %>
-  </ul>
-
-  <form action="/" method="POST" onsubmit="return validform()">
-    <input type="text" id="taskinput" name="ele1" placeholder="Enter a new task">
-    <select name="priority">
+    <form action="/" method="POST" onsubmit="return validateForm()">
+        <input type="text" id="taskinput" name="taskName" placeholder="Enter a new task">
+        <select name="priority">
             <option value="low">Low</option>
             <option value="high">High</option>
             <option value="urgent">Urgent</option>
-    </select>
-    <button type="submit">Add Task</button>
-</form>
+        </select>
+        <button type="submit">Add Task</button>
+    </form>
 
-<script>
-function validform() {
-    var taskinput = document.getElementById("taskinput").value;
-    if (taskinput.trim() === "") {
-        alert("Enter a task!");
-        return false;
-    }
-}
-</script>
+    <script>
+        function getColor(priority) {
+            if (priority === "urgent") return "red";
+            if (priority === "high") return "orange";
+            return "green";
+        }
+
+        function validateForm() {
+            let taskinput = document.getElementById("taskinput").value.trim();
+            if (taskinput === "") {
+                alert("Please enter a task!");
+                return false;
+            }
+            return true;
+        }
+    </script>
 </body>
 </html>
