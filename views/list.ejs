@@ -11,7 +11,7 @@
     <% ejes.forEach(function(task) { %>
       <li>
         <%= task.name %>
-        <form action="/edit/<%= task._id %>?_method=PUT" method="POST" style="display:inline; " onsubmit="return validform()">
+        <form action="/edit/<%= task._id %>?_method=PUT" method="POST" style="display:inline; ">
           <input type="text" name="newText" placeholder="New task text" required>
           <button type="submit">Edit</button>
         </form>
