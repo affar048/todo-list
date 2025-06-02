@@ -22,13 +22,13 @@
     <% }); %>
   </ul>
 
-  <form action="/" method="POST" onsubmit="return validateForm()">
+  <form action="/" method="POST" onsubmit="return validform()">
     <input type="text" id="taskinput" name="ele1" placeholder="Enter a new task">
     <button type="submit">Add Task</button>
 </form>
 
 <script>
-function validForm() {
+function validform() {
     var taskinput = document.getElementById("taskinput").value;
     if (taskinput.trim() === "") {
         alert("Enter a task!");
