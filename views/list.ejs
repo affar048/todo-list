@@ -10,7 +10,9 @@
   <ul>
     <% ejes.forEach(function(task) { %>
       <li>
-        <%= task.name %>
+       <strong><%= task.name %></strong> - <span style="color: <%= task.priority === 'urgent' ? 'red' : task.priority === 'high' ? 'orange' : 'green' %>;">
+        <%= task.priority.toUpperCase() %></span>
+
       <form action="/edit/<%= task._id %>?_method=PUT" method="POST" style="display:inline;">
         <input type="text" id="editInput-<%= task._id %>" name="newText" placeholder="New task text">
         <button type="submit">Edit</button>
@@ -25,6 +27,11 @@
 
   <form action="/" method="POST" onsubmit="return validform()">
     <input type="text" id="taskinput" name="ele1" placeholder="Enter a new task">
+    <select name="priority">
+            <option value="low">Low</option>
+            <option value="high">High</option>
+            <option value="urgent">Urgent</option>
+    </select>
     <button type="submit">Add Task</button>
 </form>
 
