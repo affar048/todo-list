@@ -7,8 +7,11 @@
 </head>
 <body>
     <h1>My Todo List</h1>
-
     <ul>
+         <% tasks.forEach(task => { 
+            let color = task.priority === 'urgent' ? 'red' : 
+                        task.priority === 'high' ? 'orange' : 'green'; 
+        %>
         <li>
             <strong><%= task.name %></strong> - 
             <span style="color: <%= color %>;"><%= task.priority %></span>
